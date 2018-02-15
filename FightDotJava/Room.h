@@ -5,9 +5,11 @@
 #include <string>
 
 class Room {
-	Room(Location loc, std::string description);
+public:
+	Room(Location loc, std::string description, bool doors[4]);
 	bool canLeaveFrom(Direction d) const;
 	std::string getDescription() const;
+	Location getLocation() const;
 private:
 	Location loc;
 	std::string description;
