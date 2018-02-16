@@ -157,6 +157,7 @@
     <ClInclude Include="Driection.h" />
     <ClInclude Include="Location.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="InitRefrence.h" />
     <ClInclude Include="Room.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -6,7 +6,7 @@
 Player::Player(Room& currentRoom)
 	:
 	current(currentRoom) {
-	this->loc = {Refrence::playerStartX, Refrence::playerStartY};
+	this->loc = { Constants::playerStartX, Constants::playerStartY};
 }
 
 void Player::update() {
@@ -38,7 +38,7 @@ bool Player::printMajorChoices() {
 			char choice;
 			cin >> choice;
 			if (choice == 'y' || choice == 'Y') {
-				Refrence::run = false;
+				Constants::run = false;
 			} else {
 				cout << "Heh, that's what I though." << endl << endl;
 			}
