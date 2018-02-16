@@ -1,10 +1,15 @@
 #pragma once
 
 #include <string>
+#include "Location.h"
 
 namespace Refrence {
 	static constexpr int GAME_WITDH = 3;
 	static constexpr int GAME_HEIGHT = 3;
+	static const int playerStartX = 1;
+	static const int playerStartY = 2;
+
+	static bool run = true;
 
 	std::string descriptions[GAME_WITDH * GAME_HEIGHT] = {
 		"Bed room. This must be where the ruler sleeps.", "Throne Room. Who ever rules this place is large and wealthy.", "Chest storage Room. There might be valuables in these chests.",

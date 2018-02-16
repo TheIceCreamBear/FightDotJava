@@ -149,6 +149,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="FightDotJava.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Room.cpp" />
   </ItemGroup>
   <ItemGroup>
