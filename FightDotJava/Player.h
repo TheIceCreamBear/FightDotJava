@@ -10,7 +10,10 @@ public:
 	bool printMajorChoices();
 	void printMoveChoices();
 	void printRoomChoices();
+	bool movedLastUpdate();
+	Location getLocation() const;
 private:
 	Location loc;
 	Room& current;
+	bool moved = false;
 };

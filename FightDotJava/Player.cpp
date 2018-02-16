@@ -10,9 +10,16 @@ Player::Player(Room& currentRoom)
 }
 
 void Player::update() {
+	// pre turn var reset
+	moved = false;
+	// end
+
+	// process turn
 	while (!printMajorChoices()) {}
+	// end
 
 	// after turn processing
+	// end
 }
 
 bool Player::printMajorChoices() {
@@ -106,6 +113,7 @@ void Player::printMoveChoices() {
 
 		if (valid) {
 			cout << "You have entered a new room." << endl;
+			moved = true;
 		}
 	}
 }
@@ -114,4 +122,12 @@ void Player::printMoveChoices() {
 void Player::printRoomChoices() {
 	using namespace std;
 
+}
+
+bool Player::movedLastUpdate() {
+	return moved;
+}
+
+Location Player::getLocation() const {
+	return loc;
 }
