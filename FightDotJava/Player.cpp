@@ -132,6 +132,6 @@ Location Player::getLocation() const {
 	return loc;
 }
 
-void Player::setCurrentRoom(Room & r) {
+void Player::setCurrentRoom(Room& r) {
 	current = r;
 }
