@@ -11,6 +11,8 @@ public:
 	bool canLeaveFrom(Direction d) const;
 	std::string getDescription() const;
 	Location getLocation() const;
+	void init(Location loc, std::string description, bool doors[4]);
+
 private:
 	Location loc;
 	std::string description;
@@ -18,4 +20,5 @@ private:
 	bool left;
 	bool right;
 	bool down;
+	bool initialized = false;
 };

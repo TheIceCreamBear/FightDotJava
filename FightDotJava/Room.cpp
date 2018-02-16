@@ -36,3 +36,17 @@ std::string Room::getDescription() const {
 Location Room::getLocation() const {
 	return loc;
 }
+
+void Room::init(Location loc, std::string description, bool doors[4]) {
+	if (initialized) {
+		return;
+	}
+	initialized = true;
+
+	this->loc = loc;
+	this->description = description;
+	up = doors[0];
+	left = doors[1];
+	right = doors[2];
+	down = doors[3];
+}
