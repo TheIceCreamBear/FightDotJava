@@ -131,3 +131,7 @@ bool Player::movedLastUpdate() {
 Location Player::getLocation() const {
 	return loc;
 }
+
+void Player::setCurrentRoom(Room & r) {
+	current = r;
+}

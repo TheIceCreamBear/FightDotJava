@@ -12,6 +12,7 @@ public:
 	void printRoomChoices();
 	bool movedLastUpdate();
 	Location getLocation() const;
+	void setCurrentRoom(Room& r);
 private:
 	Location loc;
 	Room& current;
