@@ -14,8 +14,8 @@ namespace Refrence {
 	// UP, LEFT, RIGHT, DOWN
 	bool roomDoors[Constants::GAME_HEIGHT * Constants::GAME_WITDH][4] = {
 		{ false, false, false, true },{ false, false, false, true },{ false, false, false, true },
-	{ true, false, true, true },{ true, true, true, true },{ true, true, false, true },
-	{ true, false, true, false },{ true, true, false, true },{ true, false, false, false }
+		{ true, false, true, true },{ true, true, true, true },{ true, true, false, true },
+		{ true, false, true, false },{ true, true, false, true },{ true, false, false, false }
 	};
 
 	std::string getDescriptionForRoom(int id) {

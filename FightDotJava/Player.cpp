@@ -86,6 +86,7 @@ void Player::printMoveChoices() {
 		int choice;
 		cin >> choice;
 
+		choice--;
 		Direction val = static_cast<Direction>(choice);
 
 		switch (val) {
