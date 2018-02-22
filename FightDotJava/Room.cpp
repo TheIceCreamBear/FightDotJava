@@ -12,13 +12,20 @@ Room::Room(RoomType type, Location loc) {
 		case Room::RoomType::ENTRANCE:
 
 			break;
-		case Room::RoomType::CENTRAL:
-
+		case Room::RoomType::EMPTY:
+			this->dUp = Door(false, false);
+			this->dLeft = Door(false, false);
+			this->dRight = Door(false, false);
+			this->dDown = Door(false, false);
+			this->initialized = true;
 			break;
 		case Room::RoomType::HALLWAY:
 
 			break;
 		case Room::RoomType::CHEST:
+
+			break;
+		case Room::RoomType::CENTRAL:
 
 			break;
 		case Room::RoomType::MYSTIC:

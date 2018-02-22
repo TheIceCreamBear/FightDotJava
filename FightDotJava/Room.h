@@ -7,9 +7,8 @@
 class Room {
 public: // prototype innerclasses
 	enum class RoomType {
-		ENTRANCE, CENTRAL, HALLWAY, CHEST, MYSTIC
+		ENTRANCE, EMPTY, HALLWAY, CHEST, CENTRAL, MYSTIC
 	};
-private: // prototype innerclasses
 	class Door {
 	public:
 		Door() : Door(false, false) {} // Default constructor set to false
