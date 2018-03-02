@@ -5,7 +5,7 @@
 
 class Player {
 public:
-	Player(Room& currentRoom);
+	Player(Room& currentRoom, int& x, int& y);
 	void update();
 	bool printMajorChoices();
 	void printMoveChoices();

@@ -3,7 +3,7 @@
 #include "Constants.h"
 #include <iostream>
 
-Player::Player(Room& currentRoom)
+Player::Player(Room& currentRoom, int& x, int& y)
 	:
 	current(currentRoom) {
 	this->loc = { Constants::playerStartX, Constants::playerStartY};
@@ -35,6 +35,7 @@ bool Player::printMajorChoices() {
 		case 1:
 			cout << "You explore your current room." << endl;
 			cout << current.getDescription() << endl;
+			cout << "Location: x=" << loc.x << " y=" << loc.y << endl;
 			return true;
 		case 2:
 			printMoveChoices();
@@ -49,6 +50,7 @@ bool Player::printMajorChoices() {
 			} else {
 				cout << "Heh, that's what I though." << endl << endl;
 			}
+			Constants::run = false;
 			return true;
 		default:
 			cout << "That is not an available choice, please try again." << endl;
