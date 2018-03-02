@@ -60,6 +60,14 @@ bool Room::canLeaveFrom(Direction d) const {
 	return false;
 }
 
+bool Room::isIsolatedRoom() const {
+	bool isIso = true;
+	for (int i = 0; i < 4; i++) {
+		isIso &= this->canLeaveFrom(static_cast<Direction>(i));
+	}
+	return isIso;
+}
+
 std::string Room::getDescription() const {
 	return description;
 }

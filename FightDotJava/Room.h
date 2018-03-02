@@ -23,6 +23,7 @@ public: // all public members
 	Room() = default;
 	Room(RoomType type, Location loc);
 	bool canLeaveFrom(Direction d) const;
+	bool isIsolatedRoom() const;
 	std::string getDescription() const;
 	Location getLocation() const;
 	RoomType getRoomType() const;
