@@ -61,11 +61,11 @@ bool Room::canLeaveFrom(Direction d) const {
 }
 
 bool Room::isIsolatedRoom() const {
-	bool isIso = true;
+	bool isIso = false;
 	for (int i = 0; i < 4; i++) {
-		isIso &= this->canLeaveFrom(static_cast<Direction>(i));
+		isIso |= this->canLeaveFrom(static_cast<Direction>(i));
 	}
-	return isIso;
+	return !isIso;
 }
 
 std::string Room::getDescription() const {
