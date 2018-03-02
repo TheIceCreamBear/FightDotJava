@@ -6,7 +6,7 @@
 Player::Player(Room& currentRoom, int& x, int& y)
 	:
 	current(currentRoom) {
-	this->loc = { Constants::playerStartX, Constants::playerStartY};
+	this->loc = { x, y };
 }
 
 void Player::update() {
