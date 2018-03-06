@@ -6,5 +6,8 @@ namespace Constants {
 	static const int playerStartX = 0;
 	static const int playerStartY = 0;
 
+	static int recommendedStartX = 0;
+	static int recommendedStartY = 0;
+
 	static bool run = true;
 }

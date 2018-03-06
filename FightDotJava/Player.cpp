@@ -36,6 +36,9 @@ bool Player::printMajorChoices() {
 			cout << "You explore your current room." << endl;
 			cout << current.getDescription() << endl;
 			cout << "Location: x=" << loc.x << " y=" << loc.y << endl;
+			Location rloc = current.getLocation();
+			cout << "RoomLocation: x=" << rloc.x << " y=" << rloc.y << endl;
+			cout << static_cast<int>(current.getRoomType()) << endl;
 			return true;
 		case 2:
 			printMoveChoices();
