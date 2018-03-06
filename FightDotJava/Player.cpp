@@ -93,28 +93,34 @@ void Player::printMoveChoices() {
 
 		choice--;
 		Direction val = static_cast<Direction>(choice);
-
-		switch (val) {
-			case UP:
-				loc += {0, -1};
-				valid = true;
-				break;
-			case LEFT:
-				loc += {-1, 0};
-				valid = true;
-				break;
-			case RIGHT:
-				loc += {1, 0};
-				valid = true;
-				break;
-			case DOWN:
-				loc += {0, 1};
-				valid = true;
-				break;
-			default:
-				cout << "Sorry, invalid input. Please try again." << endl;
-				valid = false;
-				break;
+		
+		if (current.canLeaveFrom(val)) {
+			switch (val) {
+				case UP:
+					loc += {0, -1};
+					valid = true;
+					break;
+				case LEFT:
+					loc += {-1, 0};
+					valid = true;
+					break;
+				case RIGHT:
+					loc += {1, 0};
+					valid = true;
+					break;
+				case DOWN:
+					loc += {0, 1};
+					valid = true;
+					break;
+				default:
+					cout << "Sorry, invalid input. Please try again." << endl;
+					valid = false;
+					break;
+			}
+		} else {
+			cout << "Sorry, invalid input. Please try again." << endl;
+			valid = false;
+			break;
 		}
 
 		if (valid) {
