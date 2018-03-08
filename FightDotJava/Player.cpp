@@ -25,8 +25,9 @@ void Player::update() {
 bool Player::printMajorChoices() {
 	using namespace std;
 	cout << endl << "What would you like to do?" << endl;
-	cout << "1. Explore currently occupied room." << endl;
+	cout << "1. Explore currently occupied room." << endl; // TODO change this from explore current room to current room actions or something
 	cout << "2. Move to another room." << endl;
+	cout << "3. Look in your inventory." << endl;
 	cout << "3. Exit game. (WARNING, THIS OPTION IS TEMPORARY)." << endl;
 
 	int choice;
@@ -35,16 +36,21 @@ bool Player::printMajorChoices() {
 		case 1:
 			cout << "You explore your current room." << endl;
 			cout << current.getDescription() << endl;
-			cout << "Location: x=" << loc.x << " y=" << loc.y << endl;
-			Location rloc = current.getLocation();
-			cout << "RoomLocation: x=" << rloc.x << " y=" << rloc.y << endl;
-			cout << static_cast<int>(current.getRoomType()) << endl;
+			{ // DEBUG CODE FOR ME
+				cout << "Location: x=" << loc.x << " y=" << loc.y << endl;
+				Location rloc = current.getLocation();
+				cout << "RoomLocation: x=" << rloc.x << " y=" << rloc.y << endl;
+				cout << static_cast<int>(current.getRoomType()) << endl;
+			}
 			return true;
 		case 2:
 			printMoveChoices();
 			return true;
 			break;
 		case 3:
+
+			break;
+		case 4:
 			cout << "Are you sure you wish to exit? (Y/N): ";
 			char choice;
 			cin >> choice;
@@ -136,6 +142,10 @@ void Player::printRoomChoices() {
 
 }
 
+void Player::printInventoryChoices() {
+
+}
+
 bool Player::movedLastUpdate() {
 	return moved;
 }
@@ -146,4 +156,13 @@ Location Player::getLocation() const {
 
 void Player::setCurrentRoom(Room& r) {
 	current = r;
+}
+
+void Player::printInventory() {
+	using namespace std;
+	for (vector<Item>::iterator i = items.begin(); i != items.end(); ++i) {
+		Item& item = *i;
+		cout << "Item: Type=" << static_cast<int>(item.getType()) << " Description=" << item.getDescription() << ((item.isNegativeItem()) ? " Damage="  : " ");
+
+	}
 }

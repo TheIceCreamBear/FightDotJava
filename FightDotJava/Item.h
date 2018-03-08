@@ -14,10 +14,12 @@ public:
 	std::string getDescription() const;
 	int getEffect() const;
 	float getMultiplier() const;
+	bool isNegativeItem() const;
 	bool operator==(const Item rhs);
 private:
 	ItemType type;
 	std::string description;
+	bool negative;
 	int effect;
 	float multiplier;
 };

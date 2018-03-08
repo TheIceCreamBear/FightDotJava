@@ -8,6 +8,11 @@ Item::Item() {
 Item::Item(ItemType t, std::string description) {
 	type = t;
 	this->description = description;
+	if (type == ItemType::INSTANT_DAMAGE || type == ItemType::WEAPON) {
+		negative = true;
+	} else {
+		negative = false;
+	}
 }
 
 Item::Item(ItemType t, std::string description, int effect, float multiplier) {
@@ -15,6 +20,11 @@ Item::Item(ItemType t, std::string description, int effect, float multiplier) {
 	this->description = description;
 	this->effect = effect;
 	this->multiplier = multiplier;
+	if (type == ItemType::INSTANT_DAMAGE || type == ItemType::WEAPON) {
+		negative = true;
+	} else {
+		negative = false;
+	}
 }
 
 Item::ItemType Item::getType() const {
@@ -33,8 +43,12 @@ float Item::getMultiplier() const {
 	return multiplier;
 }
 
+bool Item::isNegativeItem() const {
+	return negative;
+}
+
 bool Item::operator==(const Item rhs) {
-	if (this->type == rhs.type && this->description == rhs.description && this->loc == rhs.loc && this->effect == rhs.effect && this->multiplier == rhs.multiplier) {
+	if (this->type == rhs.type && this->description == rhs.description && this->effect == rhs.effect && this->multiplier == rhs.multiplier) {
 		return true;
 	}
 	return false;
