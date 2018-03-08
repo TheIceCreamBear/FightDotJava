@@ -149,12 +149,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="FightDotJava.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Room.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Driection.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="Location.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="InitRefrence.h" />
