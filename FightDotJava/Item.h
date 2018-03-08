@@ -15,6 +15,7 @@ public:
 	Location getLocation() const;
 	int getEffect() const;
 	float getMultiplier() const;
+	bool operator==(const Item rhs);
 private:
 	ItemType type;
 	std::string description;

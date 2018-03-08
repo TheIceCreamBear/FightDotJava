@@ -39,3 +39,10 @@ int Item::getEffect() const {
 float Item::getMultiplier() const {
 	return multiplier;
 }
+
+bool Item::operator==(const Item rhs) {
+	if (this->type == rhs.type && this->description == rhs.description && this->loc == rhs.loc && this->effect == rhs.effect && this->multiplier == rhs.multiplier) {
+		return true;
+	}
+	return false;
+}
