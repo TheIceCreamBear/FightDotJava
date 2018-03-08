@@ -1,5 +1,11 @@
 #include "Item.h"
 
+Item::Item() {
+	type = ItemType::EMPTY;
+	description	= "";
+	loc = { -1, -1 };
+}
+
 Item::Item(ItemType t, std::string description, Location loc) {
 	type = t;
 	this->description = description;

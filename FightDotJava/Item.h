@@ -5,8 +5,9 @@
 class Item {
 public:
 	enum class ItemType {
-		HEALING, WEAPON, INSTANT_DAMAGE
+		EMPTY, HEALING, WEAPON, INSTANT_DAMAGE
 	};
+	Item();
 	Item(ItemType t, std::string description, Location loc);
 	Item(ItemType t, std::string description, Location loc, int effect, float multiplier);
 	ItemType getType() const;
