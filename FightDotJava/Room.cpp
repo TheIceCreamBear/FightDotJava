@@ -91,3 +91,41 @@ void Room::initDoors(Door u, Door l, Door r, Door d) {
 	this->dRight = r;
 	this->dDown = d;
 }
+
+bool Room::hasLootableChest() {
+	return !chests.empty();
+}
+
+Item Room::lootChest() {
+	if (chests.empty()) {
+		return Item();
+	}
+
+	Chest& c = chests.front();
+	chests.pop();
+
+	if (!c.isLooted()) {
+		return c.loot();
+	} else {
+		return Item();
+	}
+}
+
+Room::Chest& Room::Chest::operator=(const Chest & rhs) {
+	if (*this != rhs) {
+		this->looted = rhs.looted;
+		item = rhs.item;
+	}
+	return *this;
+}
+
+bool Room::Chest::operator==(const Chest & rhs) {
+	if (this->item == rhs.item && this->looted == rhs.looted) {
+		return true;
+	}
+	return false;
+}
+
+bool Room::Chest::operator!=(const Chest & rhs) {
+	return !(*this == rhs);
+}
