@@ -3,7 +3,7 @@
 #include "Constants.h"
 #include <iostream>
 
-Player::Player(Room& currentRoom, int& x, int& y)
+Player::Player(Room* currentRoom, int& x, int& y)
 	:
 	current(currentRoom) {
 	this->loc = { x, y };
@@ -27,28 +27,23 @@ bool Player::printMajorChoices() {
 	cout << endl << "What would you like to do?" << endl;
 	cout << "1. Explore currently occupied room." << endl; // TODO change this from explore current room to current room actions or something
 	cout << "2. Move to another room." << endl;
-	cout << "3. Look in your inventory." << endl;
-	cout << "3. Exit game. (WARNING, THIS OPTION IS TEMPORARY)." << endl;
+	cout << "3. Inventory Options" << endl;
+	cout << "4. Exit game. (WARNING, THIS OPTION IS TEMPORARY)." << endl;
 
 	int choice;
 	cin >> choice;
 	switch (choice) {
 		case 1:
-			cout << "You explore your current room." << endl;
-			cout << current.getDescription() << endl;
-			{ // DEBUG CODE FOR ME
-				cout << "Location: x=" << loc.x << " y=" << loc.y << endl;
-				Location rloc = current.getLocation();
-				cout << "RoomLocation: x=" << rloc.x << " y=" << rloc.y << endl;
-				cout << static_cast<int>(current.getRoomType()) << endl;
-			}
+			printRoomChoices();
 			return true;
+			break;
 		case 2:
 			printMoveChoices();
 			return true;
 			break;
 		case 3:
-
+			printInventoryChoices();
+			return true;
 			break;
 		case 4:
 			cout << "Are you sure you wish to exit? (Y/N): ";
@@ -74,7 +69,7 @@ void Player::printMoveChoices() {
 		cout << "Where would you like to go?" << endl;
 		for (int i = 0; i < 4; i++) {
 			Direction val = static_cast<Direction>(i);
-			if (current.canLeaveFrom(val)) {
+			if (current->canLeaveFrom(val)) {
 				switch (val) {
 					case UP:
 						cout << "1. UP" << endl;
@@ -100,7 +95,7 @@ void Player::printMoveChoices() {
 		choice--;
 		Direction val = static_cast<Direction>(choice);
 		
-		if (current.canLeaveFrom(val)) {
+		if (current->canLeaveFrom(val)) {
 			switch (val) {
 				case UP:
 					loc += {0, -1};
@@ -139,11 +134,65 @@ void Player::printMoveChoices() {
 // EVENTUALLY TERE WILL BE SOME CHOICES SPECIFIC TO SOME ROOMS
 void Player::printRoomChoices() {
 	using namespace std;
+	cout << "You explore your current room." << endl;
+	cout << current->getDescription() << endl;
+	{ // DEBUG CODE FOR ME
+		cout << "Location: x=" << loc.x << " y=" << loc.y << endl;
+		Location rloc = current->getLocation();
+		cout << "RoomLocation: x=" << rloc.x << " y=" << rloc.y << endl;
+		cout << static_cast<int>(current->getRoomType()) << endl;
+	}
 
+	if (current->hasLootableChest()) {
+		cout << "Loot this room?" << endl;
+		cout << "1. Yes" << endl;
+		cout << "2. No" << endl;
+		
+		int c = 0;
+		cin >> c;
+		switch (c) {
+			case 1:
+				items.push_back(current->lootChest());
+				break;
+			case 2:
+				break;
+			default:
+				break;
+		}
+	} else {
+
+	}
 }
 
 void Player::printInventoryChoices() {
+	using namespace std;
+	bool done = false;
+	while (!done) {
+		cout << endl << "What would you like to do?" << endl;
+		cout << "1. View inventory." << endl;
+		cout << "2. Use Item." << endl;
+		cout << "3. Discard Item." << endl;
+		cout << "4. Leave Inventory." << endl;
+		
+		int choice = 0;
+		cin >> choice;
+		switch (choice) {
+			case 1:
+				printInventory();
+				break;
+			case 2:
 
+				break;
+			case 3:
+
+				break;
+			case 4:
+				done = true;
+				break;
+			default:
+				break;
+		}
+	}
 }
 
 bool Player::movedLastUpdate() {
@@ -154,7 +203,7 @@ Location Player::getLocation() const {
 	return loc;
 }
 
-void Player::setCurrentRoom(Room& r) {
+void Player::setCurrentRoom(Room* r) {
 	current = r;
 }
 
@@ -162,7 +211,7 @@ void Player::printInventory() {
 	using namespace std;
 	for (vector<Item>::iterator i = items.begin(); i != items.end(); ++i) {
 		Item& item = *i;
-		cout << "Item: Type=" << static_cast<int>(item.getType()) << " Description=" << item.getDescription() << ((item.isNegativeItem()) ? " Damage="  : " ");
+		cout << "Item: Type=" << static_cast<int>(item.getType()) << " Description=" << item.getDescription() << ((item.isNegativeItem()) ? " Damage="  : " HealthRestore=") << item.getEffect() << ((item.isNegativeItem()) ? " DamageMultiplier=" : " Mult=") << item.getMultiplier();
 
 	}
 }

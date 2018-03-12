@@ -7,7 +7,7 @@
 
 class Player {
 public:
-	Player(Room& currentRoom, int& x, int& y);
+	Player(Room* currentRoom, int& x, int& y);
 	void update();
 	bool printMajorChoices();
 	void printMoveChoices();
@@ -15,11 +15,11 @@ public:
 	void printInventoryChoices();
 	bool movedLastUpdate();
 	Location getLocation() const;
-	void setCurrentRoom(Room& r);
+	void setCurrentRoom(Room* r);
 private:
 	void printInventory();
 	Location loc;
-	Room& current;
+	Room* current;
 	std::vector<Item> items = std::vector<Item>();
 	bool moved = false;
 };
