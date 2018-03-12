@@ -47,6 +47,7 @@ public: // all public members
 	Location getLocation() const;
 	RoomType getRoomType() const;
 	void initDoors(Door u, Door l, Door r, Door d);
+	void initChests();
 	bool hasLootableChest();
 	Item lootChest();
 private: // all private member variables
@@ -55,6 +56,7 @@ private: // all private member variables
 	RoomType type;
 	std::queue<Chest> chests = std::queue<Chest>();
 	bool initialized = false;
+	bool chestInit = false;
 	Door dUp;
 	Door dLeft;
 	Door dRight;
