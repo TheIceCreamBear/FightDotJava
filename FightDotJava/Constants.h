@@ -4,6 +4,7 @@
 namespace Constants {
 	static constexpr int GAME_WITDH = 5;
 	static constexpr int GAME_HEIGHT = 5;
+	static constexpr bool DEBUG_MODE = true;
 	static const int playerStartX = 0;
 	static const int playerStartY = 0;
 
