@@ -1,8 +1,13 @@
 #include "Item.h"
+#include "Constants.h"
 
 Item::Item() {
 	type = ItemType::EMPTY;
 	description	= "";
+	effect = 0;
+	multiplier = 0.0f;
+	negative = false;
+	id = -1;
 }
 
 Item::Item(ItemType t, std::string description) {
@@ -13,6 +18,8 @@ Item::Item(ItemType t, std::string description) {
 	} else {
 		negative = false;
 	}
+	id = Constants::itemID;
+	Constants::itemID++;
 }
 
 Item::Item(ItemType t, std::string description, int effect, float multiplier) {
@@ -25,6 +32,8 @@ Item::Item(ItemType t, std::string description, int effect, float multiplier) {
 	} else {
 		negative = false;
 	}
+	id = Constants::itemID;
+	Constants::itemID++;
 }
 
 Item::ItemType Item::getType() const {

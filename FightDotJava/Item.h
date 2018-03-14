@@ -18,8 +18,9 @@ public:
 	bool operator==(const Item rhs);
 private:
 	ItemType type;
-	std::string description;
+	int id;
 	bool negative;
 	int effect;
 	float multiplier;
+	std::string description;
 };

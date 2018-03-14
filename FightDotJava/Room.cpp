@@ -1,6 +1,7 @@
 #include "Room.h"
 #include "Constants.h"
 #include <random>
+#include <iostream>
 
 Room::Door::Door(bool exists, bool locked) {
 	this->exists = exists;
@@ -151,6 +152,14 @@ void Room::initChests() {
 				chests.push(c);
 			}
 			
+			/*
+			for (int i = 0; i < chests.size(); i++) {
+				Chest c = chests.front();
+				std::cout << &c.debugGetItem();
+			}
+			*/
+			
+			// system("Pause");
 			break;
 		}
 		case Room::RoomType::CENTRAL: {

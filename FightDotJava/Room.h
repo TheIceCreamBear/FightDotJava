@@ -2,6 +2,7 @@
 
 #include <string>
 #include <queue>
+#include "Constants.h"
 #include "Location.h"
 #include "Driection.h"
 #include "Item.h"
@@ -24,7 +25,7 @@ public: // prototype innerclasses
 private:
 	class Chest {
 	public:
-		Chest(Item i) : item(i) {}
+		Chest(Item i) : item(i) { id = Constants::chestID; Constants::chestID++; }
 		bool isLooted() { return looted; }
 		Item loot() { 
 			looted = true; 
@@ -34,8 +35,9 @@ private:
 		bool operator==(const Chest& rhs);
 		bool operator!=(const Chest& rhs);
 	private:
+		int id;
 		bool looted = false;
-		Item& item;
+		Item item;
 	};
 
 public: // all public members

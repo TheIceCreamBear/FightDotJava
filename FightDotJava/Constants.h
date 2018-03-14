@@ -16,6 +16,8 @@ namespace Constants {
 
 	static int recommendedStartX = 0;
 	static int recommendedStartY = 0;
+	static int chestID = 0;
+	static int itemID = 0;
 
 	static bool run = true;
 }
