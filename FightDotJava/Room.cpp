@@ -130,7 +130,7 @@ void Room::initChests() {
 						break;
 					}
 					case Item::ItemType::WEAPON: {
-						std::uniform_real_distribution<float> f = std::uniform_real_distribution<float>(1.1f, 2.0f);
+						std::uniform_real_distribution<float> f = std::uniform_real_distribution<float>(0.1f, 1.0f);
 						mult = f(Constants::rng);
 						break;
 					}
@@ -182,7 +182,7 @@ void Room::initChests() {
 					break;
 				}
 				case Item::ItemType::WEAPON: {
-					std::uniform_real_distribution<float> f = std::uniform_real_distribution<float>(1.1f, 2.0f);
+					std::uniform_real_distribution<float> f = std::uniform_real_distribution<float>(0.1f, 1.0f);
 					mult = f(Constants::rng);
 					break;
 				}
@@ -225,7 +225,7 @@ void Room::initChests() {
 
 				}
 				case Item::ItemType::WEAPON: {
-					std::uniform_real_distribution<float> f = std::uniform_real_distribution<float>(1.5f, 2.5f);
+					std::uniform_real_distribution<float> f = std::uniform_real_distribution<float>(1.0f, 2.5f);
 					mult = f(Constants::rng);
 					break;
 				}
