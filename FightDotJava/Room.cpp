@@ -252,6 +252,10 @@ void Room::initChests() {
 	}
 }
 
+int Room::numLootableChests() {
+	return chests.size();
+}
+
 bool Room::hasLootableChest() {
 	return !chests.empty();
 }

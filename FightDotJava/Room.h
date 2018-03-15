@@ -50,6 +50,7 @@ public: // all public members
 	RoomType getRoomType() const;
 	void initDoors(Door u, Door l, Door r, Door d);
 	void initChests();
+	int numLootableChests();
 	bool hasLootableChest();
 	Item lootChest();
 private: // all private member variables
