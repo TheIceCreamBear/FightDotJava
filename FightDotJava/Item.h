@@ -12,6 +12,7 @@ public:
 	Item(ItemType t, std::string description, int effect, float multiplier);
 	ItemType getType() const;
 	std::string getDescription() const;
+	std::string getTypeAsString() const;
 	int getEffect() const;
 	float getMultiplier() const;
 	bool isNegativeItem() const;

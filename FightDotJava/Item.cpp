@@ -44,6 +44,26 @@ std::string Item::getDescription() const {
 	return description;
 }
 
+std::string Item::getTypeAsString() const {
+	switch (type) {
+		case Item::ItemType::EMPTY:
+			return "Null-Item";
+			break;
+		case Item::ItemType::HEALING:
+			return "Instant-Healing-Item";
+			break;
+		case Item::ItemType::WEAPON:
+			return "Weapon-Item";
+			break;
+		case Item::ItemType::INSTANT_DAMAGE:
+			return "Instant-Damage-Item";
+			break;
+		default:
+			break;
+	}
+	return std::string();
+}
+
 int Item::getEffect() const {
 	return effect;
 }
