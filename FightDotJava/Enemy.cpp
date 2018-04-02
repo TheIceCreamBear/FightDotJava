@@ -10,7 +10,14 @@ void Enemy::update() {
 	// TODO enemy movement
 }
 
+void Enemy::damage(int amount) {
+	this->health -= amount;
+	if (health < 0) {
+		health = 0;
+	}
+}
+
 int Enemy::getDamageFromAttack() {
 	// TODO Eventually have multiple attacks and critical hits
-	return damage(Constants::rng);
+	return damageRange(Constants::rng);
 }
