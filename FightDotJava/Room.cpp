@@ -275,7 +275,30 @@ Item Room::lootChest() {
 	}
 }
 
-Room::Chest& Room::Chest::operator=(const Chest & rhs) {
+void Room::spawnEnemy() {
+	if (this->type == RoomType::EMPTY || this->type == RoomType::ENTRANCE) { // safety
+		return;
+	}
+
+	if (this->type == RoomType::MYSTIC) {
+		enemies.push_back(Enemy({ loc.x, loc.y }, "Brute", 150));
+	}
+
+	enemies.push_back(Enemy({ loc.x, loc.y }, "Regular", 100)); // TODO va(?????) (MORE VALUES??) // Data corruption
+}
+
+bool Room::canSpawnEnemy() {
+	if (this->type != RoomType::EMPTY && this->type != RoomType::ENTRANCE) {
+		return true;
+	}
+	return false;
+}
+
+bool Room::hasEnemy() {
+	return enemies.size() > 0;
+}
+
+Room::Chest& Room::Chest::operator=(const Chest& rhs) {
 	if (*this != rhs) {
 		this->looted = rhs.looted;
 		item = rhs.item;
@@ -283,13 +306,13 @@ Room::Chest& Room::Chest::operator=(const Chest & rhs) {
 	return *this;
 }
 
-bool Room::Chest::operator==(const Chest & rhs) {
+bool Room::Chest::operator==(const Chest& rhs) {
 	if (this->item == rhs.item && this->looted == rhs.looted) {
 		return true;
 	}
 	return false;
 }
 
-bool Room::Chest::operator!=(const Chest & rhs) {
+bool Room::Chest::operator!=(const Chest& rhs) {
 	return !(*this == rhs);
 }

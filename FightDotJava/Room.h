@@ -2,10 +2,12 @@
 
 #include <string>
 #include <queue>
+#include <vector>
 #include "Constants.h"
 #include "Location.h"
 #include "Driection.h"
 #include "Item.h"
+#include "Enemy.h"
 
 class Room {
 public: // prototype innerclasses
@@ -53,11 +55,15 @@ public: // all public members
 	int numLootableChests();
 	bool hasLootableChest();
 	Item lootChest();
+	void spawnEnemy();
+	bool canSpawnEnemy();
+	bool hasEnemy();
 private: // all private member variables
 	Location loc;
 	std::string description;
 	RoomType type;
 	std::queue<Chest> chests = std::queue<Chest>();
+	std::vector<Enemy> enemies = std::vector<Enemy>();
 	bool initialized = false;
 	bool chestInit = false;
 	Door dUp;

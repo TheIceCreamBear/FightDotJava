@@ -7,6 +7,7 @@ namespace Constants {
 	static constexpr bool DEBUG_MODE = true;
 	static const int playerStartX = 0;
 	static const int playerStartY = 0;
+	static const int idealNumEnemies = (GAME_HEIGHT * GAME_WITDH) / 5;
 
 	// If zero, use time, if not zero, use this
 	static const long long reccomendSeed = 15198726674730761; // decent seed for 5x5
