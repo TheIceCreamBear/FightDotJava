@@ -55,9 +55,16 @@ public: // all public members
 	int numLootableChests();
 	bool hasLootableChest();
 	Item lootChest();
+	// ENEMY STUFFS; ASSUMES ONLY ONE ENEMY
 	void spawnEnemy();
 	bool canSpawnEnemy();
 	bool hasEnemy();
+	int getEnemyHealth() {
+		return enemies.front().getHealth();
+	}
+	std::string getEnemyName() {
+		return enemies.front().getName();
+	}
 private: // all private member variables
 	Location loc;
 	std::string description;
