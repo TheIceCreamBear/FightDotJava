@@ -9,6 +9,9 @@ public:
 	void update();
 	void damage(int amount);
 	std::string getName();
+	int getHealth() {
+		return health;
+	}
 	int getDamageFromAttack();
 	bool isDead() {
 		return health == 0;
