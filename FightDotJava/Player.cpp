@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Driection.h"
 #include "Constants.h"
+#include "Enemy.h"
 #include <iostream>
 
 Player::Player(Room* currentRoom, int& x, int& y)
@@ -10,16 +11,26 @@ Player::Player(Room* currentRoom, int& x, int& y)
 }
 
 void Player::update() {
-	// pre turn var reset
+	// pre turn var reset /Check
 	moved = false;
+	if (current->hasEnemy() && state != State::FIGHTING) {
+		state = State::FIGHTING;
+		std::cout << "You have encountered an enemy!\nPrepare to Fight!\n" << std::endl;
+	}
 	// end
 
-	// process turn
-	while (!printMajorChoices()) {}
-	// end
+	if (state == State::EXPLORING) {
+		while (!printMajorChoices()) {}
+		
+	} else if (state == State::FIGHTING) {
+		// process turn
+		this->processPlayerTrun();
+		// end
 
-	// after turn processing
-	// end
+		// after turn processing
+		this->processEnemyResponse();
+		// end
+	}
 }
 
 bool Player::printMajorChoices() {
@@ -56,7 +67,7 @@ bool Player::printMajorChoices() {
 			if (choice == 'y' || choice == 'Y') {
 				Constants::run = false;
 			} else {
-				cout << "Heh, that's what I though." << endl << endl;
+				cout << "Heh, that's what I thought." << endl << endl;
 			}
 			Constants::run = false;
 			return true;
@@ -219,9 +230,10 @@ void Player::printPlayerStats() {
 
 }
 
-void Player::printInventoryChoices() {
+bool Player::printInventoryChoices() {
 	using namespace std;
 	bool done = false;
+	bool didAction = false;
 	while (!done) {
 		cout << endl << "Which inventory action would you like to perform?" << endl;
 		cout << "1. View inventory." << endl;
@@ -248,6 +260,10 @@ void Player::printInventoryChoices() {
 						case Item::ItemType::HEALING:
 							health += i.getEffect();
 							items.erase(it);
+							didAction = true;
+							if (this->state == State::FIGHTING) {
+								done = true;
+							}
 							break;
 						case Item::ItemType::WEAPON:
 							if (hasItemEquipped) {
@@ -270,11 +286,20 @@ void Player::printInventoryChoices() {
 							equippedItemIndex = choice;
 							hasItemEquipped = true;
 							cout << "Item equipped." << endl;
-							
+							didAction = true;
+
+							if (this->state == State::FIGHTING) {
+								done = true;
+							}
 							break;
 						case Item::ItemType::INSTANT_DAMAGE:
-							cout << "Unable to use selceted item at this time.";
-							// if the player is fighting then he can use this, else no.
+							if (this->state == State::EXPLORING) {
+								cout << "Unable to use selceted item at this time.";
+							} else {
+								current->getEnemy().damage(i.getEffect());
+								done = true;
+								didAction = true;
+							}
 							break;
 						default:
 							break;
@@ -303,6 +328,7 @@ void Player::printInventoryChoices() {
 							items.erase(it);
 							if (s - 1 == items.size()) {
 								cout << "Item Sucessfully discarded." << endl;
+								didAction = true;
 							}
 						} else {
 							cout << "The Item will not be discarded." << endl;
@@ -318,6 +344,7 @@ void Player::printInventoryChoices() {
 							items.erase(it);
 							if (s - 1 == items.size()) {
 								cout << "Item Sucessfully discarded." << endl;
+								didAction = true;
 							}
 						} else {
 							cout << "The Item will not be discarded." << endl;
@@ -334,6 +361,53 @@ void Player::printInventoryChoices() {
 				break;
 		}
 	}
+	return didAction;
+}
+
+void Player::processPlayerTrun() {
+	std::uniform_int_distribution<int> pDist = std::uniform_int_distribution<int>(3, 6);
+	std::uniform_int_distribution<int> kDist = std::uniform_int_distribution<int>(5, 10);
+	std::uniform_int_distribution<int> sDist = std::uniform_int_distribution<int>(9, 14);
+	using namespace std;
+	cout << endl << "Your Health: " << health << endl;
+	cout << "Enemy Health:" << current->getEnemy().getHealth() << " \tEnemy type: " << current->getEnemyName() << endl;
+	cout << "Moves:\t1. Punch " << (int)(damageMod * pDist.min()) << "-" << (int)(damageMod * pDist.max()) << "\t2. Kick " << (int)(damageMod * kDist.min()) << "-" << (int)(damageMod * kDist.max());
+	cout << "\t3. Special " << (int)(damageMod * sDist.min()) << " - " << (int)(damageMod * sDist.max()) << endl;
+	cout << "Other Options:\t 4. Inventory" << endl;
+	int choice;
+	cin >> choice;
+	switch (choice) {
+		case -1:
+			doCheatLoop();
+			break;
+		case 1: {
+			int damage = pDist(Constants::combactRng);
+			int newDamage = (int) (damage * damageMod);
+			current->getEnemy().damage(newDamage);
+			break;
+		}
+		case 2: {
+			int damage = kDist(Constants::combactRng);
+			int newDamage = (int)(damage * damageMod);
+			current->getEnemy().damage(newDamage);
+			break;
+		}
+		case 3: {
+			int damage = sDist(Constants::combactRng);
+			int newDamage = (int)(damage * damageMod);
+			current->getEnemy().damage(newDamage);
+			break;
+		}
+		case 4:
+			printInventoryChoices();
+			break;
+		default:
+			break;
+	}
+}
+
+void Player::processEnemyResponse() {
+	this->health -= current->getEnemy().getDamageFromAttack();
 }
 
 bool Player::movedLastUpdate() {
