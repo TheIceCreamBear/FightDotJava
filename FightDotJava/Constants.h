@@ -1,5 +1,6 @@
 #pragma once
 #include <random>
+#include <chrono>
 
 namespace Constants {
 	static constexpr int GAME_WITDH = 5;
@@ -12,8 +13,9 @@ namespace Constants {
 	// If zero, use time, if not zero, use this
 	static const long long reccomendSeed = 15198726674730761; // decent seed for 5x5
 	
-	static std::mt19937 rng = std::mt19937(0);
 	static long long seed = 0; // dynamic
+	static std::mt19937 rng = std::mt19937(0);
+	static std::mt19937 combactRng = std::mt19937(std::chrono::system_clock::now().time_since_epoch().count());
 
 	static int recommendedStartX = 0;
 	static int recommendedStartY = 0;

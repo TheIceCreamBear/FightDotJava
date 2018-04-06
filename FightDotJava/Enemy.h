@@ -17,7 +17,7 @@ public:
 		return health == 0;
 	}
 private:
-	std::uniform_int_distribution<int> damageRange = std::uniform_int_distribution<int>(5, 12);
+	std::uniform_int_distribution<int> damageRange = std::uniform_int_distribution<int>(5, 10);
 	Location loc;
 	std::string name;
 	int health;

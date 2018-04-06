@@ -24,5 +24,5 @@ std::string Enemy::getName() {
 
 int Enemy::getDamageFromAttack() {
 	// TODO Eventually have multiple attacks and critical hits
-	return damageRange(Constants::rng);
+	return damageRange(Constants::combactRng);
 }
