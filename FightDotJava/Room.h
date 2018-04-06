@@ -59,7 +59,7 @@ public: // all public members
 	void spawnEnemy();
 	bool canSpawnEnemy();
 	bool hasEnemy();
-	Enemy getEnemy() {
+	Enemy& getEnemy() {
 		return enemies.front();
 	}
 	int getEnemyHealth() {
