@@ -13,14 +13,16 @@ Player::Player(Room* currentRoom, int& x, int& y)
 void Player::update() {
 	// pre turn var reset /Check
 	moved = false;
-	if (current->hasEnemy() && state != State::FIGHTING) {
+	if (current->hasEnemy() && !current->getEnemy().isDead() && state != State::FIGHTING) {
 		state = State::FIGHTING;
 		std::cout << "You have encountered an enemy!\nPrepare to Fight!\n" << std::endl;
 	}
 	// end
 
 	if (state == State::EXPLORING) {
-		while (!printMajorChoices()) {}
+		while (!printMajorChoices()) {
+			if (!run) { return; }
+		}
 		
 	} else if (state == State::FIGHTING) {
 		// process turn
@@ -28,7 +30,13 @@ void Player::update() {
 		// end
 
 		// after turn processing
-		this->processEnemyResponse();
+		if (!current->getEnemy().isDead()) {
+			this->processEnemyResponse();
+		}
+
+		if (specialCounter > 0) {
+			specialCounter--;
+		}
 		// end
 	}
 }
@@ -40,7 +48,7 @@ bool Player::printMajorChoices() {
 	cout << "2. Move to another room." << endl;
 	cout << "3. Inventory Options." << endl;
 	cout << "4. View Player Stats." << endl;
-	//cout << "5. Exit game. (WARNING, THIS OPTION IS TEMPORARY)." << endl;
+	cout << "5. Exit game." << endl;
 
 	int choice;
 	cin >> choice;
@@ -65,11 +73,10 @@ bool Player::printMajorChoices() {
 			char choice;
 			cin >> choice;
 			if (choice == 'y' || choice == 'Y') {
-				Constants::run = false;
+				this->run = false;
 			} else {
 				cout << "Heh, that's what I thought." << endl << endl;
 			}
-			Constants::run = false;
 			return true;
 		default:
 			cout << "That is not an available choice, please try again." << endl;
@@ -372,42 +379,134 @@ void Player::processPlayerTrun() {
 	cout << endl << "Your Health: " << health << endl;
 	cout << "Enemy Health:" << current->getEnemy().getHealth() << " \tEnemy type: " << current->getEnemyName() << endl;
 	cout << "Moves:\t1. Punch " << (int)(damageMod * pDist.min()) << "-" << (int)(damageMod * pDist.max()) << "\t2. Kick " << (int)(damageMod * kDist.min()) << "-" << (int)(damageMod * kDist.max());
-	cout << "\t3. Special " << (int)(damageMod * sDist.min()) << " - " << (int)(damageMod * sDist.max()) << endl;
-	cout << "Other Options:\t 4. Inventory" << endl;
-	int choice;
-	cin >> choice;
-	switch (choice) {
-		case -1:
-			doCheatLoop();
-			break;
-		case 1: {
-			int damage = pDist(Constants::combactRng);
-			int newDamage = (int) (damage * damageMod);
-			current->getEnemy().damage(newDamage);
-			break;
+	cout << "\t3. Special " << (int)(damageMod * sDist.min()) << "-" << (int)(damageMod * sDist.max()) << endl;
+	cout << "Other Options:\t4. Inventory \t5. Run Away" << endl;
+	bool good = false;
+	while (!good) {
+		int choice;
+		cin >> choice;
+		switch (choice) {
+			case -1:
+				doCheatLoop();
+				break;
+			case 1: {
+				int damage = pDist(Constants::combactRng);
+				int newDamage = (int)(damage * damageMod);
+				current->getEnemy().damage(newDamage);
+				cout << "Punch did " << newDamage << " damage." << endl;
+				good = true;
+				break;
+			}
+			case 2: {
+				int damage = kDist(Constants::combactRng);
+				int newDamage = (int)(damage * damageMod);
+				current->getEnemy().damage(newDamage);
+				cout << "Kick did " << newDamage << " damage." << endl;
+				good = true;
+				break;
+			}
+			case 3: {
+				if (specialCounter == 0) {
+					int damage = sDist(Constants::combactRng);
+					int newDamage = (int)(damage * damageMod);
+					current->getEnemy().damage(newDamage);
+					cout << "Special did " << newDamage << " damage." << endl;
+					good = true;
+					break;
+				} else {
+					cout << "Sorry, this move is on cooldown. Please wait " << specialCounter << " turns." << endl;
+				}
+			}
+			case 4:
+				printInventoryChoices();
+				good = true;
+				break;
+			case 5: {
+				std::uniform_int_distribution<int> chance = std::uniform_int_distribution<int>(1, 5);
+				if (chance(Constants::combactRng) != 3) {
+					bool valid = false;
+					while (!valid) {
+						cout << "Where would you like to run to?" << endl;
+						for (int i = 0; i < 4; i++) {
+							Direction val = static_cast<Direction>(i);
+							if (current->canLeaveFrom(val)) {
+								switch (val) {
+									case UP:
+										cout << "1. UP" << endl;
+										break;
+									case LEFT:
+										cout << "2. LEFT" << endl;
+										break;
+									case RIGHT:
+										cout << "3. RIGHT" << endl;
+										break;
+									case DOWN:
+										cout << "4. DOWN" << endl;
+										break;
+									default:
+										break;
+								}
+							}
+						}
+
+						int choice;
+						cin >> choice;
+
+						choice--;
+						Direction val = static_cast<Direction>(choice);
+
+						if (current->canLeaveFrom(val)) {
+							switch (val) {
+								case UP:
+									loc += {0, -1};
+									valid = true;
+									break;
+								case LEFT:
+									loc += {-1, 0};
+									valid = true;
+									break;
+								case RIGHT:
+									loc += {1, 0};
+									valid = true;
+									break;
+								case DOWN:
+									loc += {0, 1};
+									valid = true;
+									break;
+								default:
+									cout << "Sorry, invalid input. Please try again." << endl;
+									valid = false;
+									break;
+							}
+							this->state = State::EXPLORING;
+							cout << "Got away successfully." << endl;
+						} else {
+							cout << "Sorry, invalid input. Please try again." << endl;
+							valid = false;
+						}
+					}
+				} else {
+					cout << "Did not get away!" << endl;
+				}
+				good = true;
+				break;
+			}
+			default:
+				cout << "Sorry, invalid input. Please try again." << endl;
+				good = false;
+				break;
 		}
-		case 2: {
-			int damage = kDist(Constants::combactRng);
-			int newDamage = (int)(damage * damageMod);
-			current->getEnemy().damage(newDamage);
-			break;
-		}
-		case 3: {
-			int damage = sDist(Constants::combactRng);
-			int newDamage = (int)(damage * damageMod);
-			current->getEnemy().damage(newDamage);
-			break;
-		}
-		case 4:
-			printInventoryChoices();
-			break;
-		default:
-			break;
+	}
+	if (current->getEnemy().isDead()) {
+		cout << "You survived." << endl;
+		this->state = State::EXPLORING;
 	}
 }
 
 void Player::processEnemyResponse() {
-	this->health -= current->getEnemy().getDamageFromAttack();
+	int damage = current->getEnemy().getDamageFromAttack();
+	this->health -= damage;
+	std::cout << "Enemy did " << damage << " damage" << std::endl;
 }
 
 bool Player::movedLastUpdate() {

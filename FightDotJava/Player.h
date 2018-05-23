@@ -8,6 +8,7 @@
 class Player {
 private:
 	static constexpr int BASE_HEALTH = 100; // possible idea of a limit to health restored
+	static constexpr int BASE_SPECIAL_TIMER = 3; // number of tunrns the player must wait to use special again
 	static constexpr float BASE_DAMAGE_MOD = 1.0f;
 	enum class State {
 		EXPLORING, FIGHTING
@@ -25,6 +26,7 @@ public:
 	bool movedLastUpdate();
 	Location getLocation() const;
 	void setCurrentRoom(Room* r);
+	bool shouldRun() { return this->run; }
 private:
 	void doCheatLoop();
 	void give();
@@ -34,9 +36,11 @@ private:
 	State state;
 	Room* current;
 	std::vector<Item> items = std::vector<Item>();
-	int equippedItemIndex = -1;
 	bool hasItemEquipped = false;
 	bool moved = false;
+	bool run = true;
+	int equippedItemIndex = -1;
+	int specialCounter = 0;
 	int health = BASE_HEALTH;
 	float damageMod = BASE_DAMAGE_MOD;
 };
