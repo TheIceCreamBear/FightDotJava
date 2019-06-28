@@ -418,8 +418,7 @@ void Player::processPlayerTrun() {
 				}
 			}
 			case 4:
-				printInventoryChoices();
-				good = true;
+				good = printInventoryChoices();
 				break;
 			case 5: {
 				std::uniform_int_distribution<int> chance = std::uniform_int_distribution<int>(1, 5);
